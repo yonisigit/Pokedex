@@ -1,6 +1,6 @@
 import { createInterface, type Interface } from "readline";
 import { getCommands } from "./commands.js";
-import { PokeAPI, ShallowLocations } from "./pokeapi.js";
+import { PokeAPI } from "./pokeapi.js";
 
 
 export type State = {
@@ -17,7 +17,7 @@ export type CLICommand = {
   callback: (state: State) => Promise<void>;
 };
 
-export function initState(): State {
+export function initState(cacheInterval: number): State {
   return {
     readline: createInterface({
       input: process.stdin,
@@ -25,8 +25,8 @@ export function initState(): State {
       prompt: "Pokedex > ",
     }),
     commandRegistry: getCommands(),
-    pokeapi: new PokeAPI(),
+    pokeapi: new PokeAPI(cacheInterval),
     nextLocationsURL: "",
-    prevLocationsURL: ""
+    prevLocationsURL: "",
   }
 }

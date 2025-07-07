@@ -1,5 +1,3 @@
-import { createInterface } from "node:readline";
-import { getCommands } from "./commands.js";
 import { State } from "./state.js";
 
 export async function startREPL(state: State) {
