@@ -3,7 +3,6 @@ import { State } from "./state";
 
 
 export async function commandExplore(state: State, ...locationArgs: string[]) {
-
   if (locationArgs.length !== 1){
     throw new Error("you must provide a location name");
   }
