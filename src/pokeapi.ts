@@ -12,34 +12,36 @@ export class PokeAPI {
     const url = pageURL || `${PokeAPI.baseURL}/location-area?offset=0&limit=20`;
 
     const cachedLocations = this.cache.get<ShallowLocations>(url);
-
     if (cachedLocations) {
       return cachedLocations;
     }
-    else {
-      try {
-        const response = await fetch(url, {
-          method: "GET"
-        });
-        const locations: ShallowLocations = await response.json();
-        this.cache.add(url, locations);
-        return locations;
-      } catch (e) {
-        console.log(e);
-        throw e;
-      }
+
+    try {
+      const response = await fetch(url, {
+        method: "GET"
+      });
+      const locations: ShallowLocations = await response.json();
+      this.cache.add(url, locations);
+      return locations;
+    } catch (e) {
+      console.log(e);
+      throw e;
     }
-
-
   }
 
   async fetchLocation(locationName: string): Promise<Location> {
     const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
+
+    const cachedLocation = this.cache.get<Location>(url);
+    if (cachedLocation) {
+      return cachedLocation;
+    }
     try {
       const response = await fetch(url, {
         method: "GET"
       });
       const location: Location = await response.json();
+      this.cache.add(url, location);
       return location;
     } catch (e) {
       console.log(e);

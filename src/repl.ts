@@ -8,6 +8,7 @@ export async function startREPL(state: State) {
 		//If input is not empy
 		if (cleanedInput.length > 0) {
 			const command = state.commandRegistry[cleanedInput[0]];
+			const args = cleanedInput.slice(1);
 
 			if (!command) {
 				console.log(`Unknown command: "${cleanedInput}". Type "help" for a list of commands.`);
@@ -15,7 +16,7 @@ export async function startREPL(state: State) {
 
 			else {
 				try {
-					await command.callback(state);
+					await command.callback(state, ...args);
 				} catch (e) {
 					console.log((e as Error).message);
 				}
