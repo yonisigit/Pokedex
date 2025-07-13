@@ -6,9 +6,6 @@ export async function commandMapNext(state: State) {
   state.prevLocationsURL = locations.previous;
   state.nextLocationsURL = locations.next;
 
-  console.log(`prev: ${state.prevLocationsURL}`);
-
-
   for (const location of locations.results) {
     console.log(location.name);
   }

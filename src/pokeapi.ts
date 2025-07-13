@@ -8,6 +8,10 @@ export class PokeAPI {
     this.cache = new Cache(cacheInterval);
   }
 
+  closeCache(){
+    this.cache.stopReapLoop();
+  }
+
   async fetchLocations(pageURL?: string): Promise<ShallowLocations> {
     const url = pageURL || `${PokeAPI.baseURL}/location-area?offset=0&limit=20`;
 
@@ -24,8 +28,7 @@ export class PokeAPI {
       this.cache.add(url, locations);
       return locations;
     } catch (e) {
-      console.log(e);
-      throw e;
+      throw new Error(`Error fetching locations: ${(e as Error).message}`);
     }
   }
 
@@ -44,8 +47,7 @@ export class PokeAPI {
       this.cache.add(url, location);
       return location;
     } catch (e) {
-      console.log(e);
-      throw e;
+      throw new Error(`Error fetching locations: ${(e as Error).message}`);
     }
   }
 
@@ -64,10 +66,8 @@ export class PokeAPI {
       this.cache.add(url, pokemon);
       return pokemon;
     } catch (e) {
-      console.log(e);
-      throw e;
+      throw new Error(`Error fetching pokemon: ${(e as Error).message}`);
     }
-
   }
 }
 

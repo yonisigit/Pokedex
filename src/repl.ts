@@ -13,7 +13,6 @@ export async function startREPL(state: State) {
 			if (!command) {
 				console.log(`Unknown command: "${cleanedInput}". Type "help" for a list of commands.`);
 			}
-
 			else {
 				try {
 					await command.callback(state, ...args);
